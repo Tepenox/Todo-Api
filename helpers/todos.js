@@ -1,7 +1,7 @@
-var db = require('../models');
+var Todo = require('../models/todo');
 
 exports.getTodos = function (req, res) {
-    db.Todo.find()
+    Todo.find()
         .then(function (todos) {
             res.json(todos); // simmilar to send but here just to be explisit
         })
@@ -11,7 +11,7 @@ exports.getTodos = function (req, res) {
 }
 
 exports.createTodo = function (req, res) {
-    db.Todo.create(req.body)
+    Todo.create(req.body)
         .then(function (newTodo) {
             res.status(201).json(newTodo);
         })
@@ -21,7 +21,7 @@ exports.createTodo = function (req, res) {
 }
 
 exports.getTodo = function (req, res) {
-    db.Todo.findById(req.params.todoId)
+    Todo.finById(req.params.todoId)
         .then(function (foundTodo) {
             res.json(foundTodo);
         })
@@ -32,7 +32,7 @@ exports.getTodo = function (req, res) {
 
 
 exports.updateTodo = function (req, res) {
-    db.Todo.findOneAndUpdate({ _id: req.params.todoId }, req.body, { new: true }) //without new true   this function will return the old value not the new one (the value after we updated it)
+    Todo.findOneAndUpdate({ _id: req.params.todoId }, req.body, { new: true }) //without new true   this function will return the old value not the new one (the value after we updated it)
         .then(function (todo) {
             res.json(todo);
         })
@@ -42,7 +42,7 @@ exports.updateTodo = function (req, res) {
 }
 
 exports.deleteTodo = function (req, res) {
-    db.Todo.remove({ _id: req.params.todoId })
+    Todo.remove({ _id: req.params.todoId })
         .then(function () {
             res.json({ message: 'We deleted it!' });
         })
